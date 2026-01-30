@@ -8,15 +8,28 @@ namespace map
     {
         private readonly IDictionary<MapDirection, MapNode> _neighborNodes = new SortedDictionary<MapDirection, MapNode>();
         private readonly Vector2Int _position;
+        private GameObject _gameObject;
+        private Sprite _sprite;
 
-        public MapNode(Vector2Int position)
+        public MapNode(Vector2Int position, Sprite sprite)
         {
             _position = position;
+            _sprite = sprite;
+            _gameObject = new GameObject("MapNode_" + _position.x + "_" + _position.y)
+            {
+                transform =
+                {
+                    position = new Vector3(_position.x, _position.y, 0)
+                }
+            };
+            
+            SpriteRenderer spriteRenderer = _gameObject.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = _sprite;
         }
 
         public MapNode AddNeighbor(MapDirection direction)
         {
-            MapNode mapNode = new MapNode(direction.IncrementPosition(_position));
+            MapNode mapNode = new MapNode(direction.IncrementPosition(_position), _sprite);
             
             if (!_neighborNodes.TryAdd(direction, mapNode))
             {

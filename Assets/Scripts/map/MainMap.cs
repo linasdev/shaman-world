@@ -4,10 +4,12 @@ namespace map
 {
     public class MainMap
     {
-        private readonly MapNode _rootMapNode = new MapNode(new Vector2Int(0, 0));
-
-        public MainMap()
+        private readonly MapNode _rootMapNode;
+        
+        public MainMap(Sprite mapNodeSprite)
         {
+            _rootMapNode = new(new Vector2Int(0, 0), mapNodeSprite);
+            
             MapNode splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
 
             splitNode1

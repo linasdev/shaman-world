@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606bba2910784d839ec113c9b80c7093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MapPlayerBehavior
+  MapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
 --- !u!212 &1209569337
 SpriteRenderer:
   serializedVersion: 2

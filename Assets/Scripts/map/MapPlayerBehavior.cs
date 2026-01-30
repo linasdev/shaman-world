@@ -5,24 +5,27 @@ namespace map
 {
     public class MapPlayerBehavior : MonoBehaviour
     {
-        private MapNode _selectedMapNode = new MainMap().GetRootNode();
-        private Transform transform;
-        private InputAction moveAction;
+        private MapNode _selectedMapNode;
+        private Transform _transform;
+        private InputAction _moveAction;
+
+        public Sprite MapNodeSprite;
         
         void Start()
         {
-            transform = GetComponent<Transform>();
-            moveAction = InputSystem.actions.FindAction("Move");
+            _selectedMapNode = new MainMap(MapNodeSprite).GetRootNode();
+            _transform = GetComponent<Transform>();
+            _moveAction = InputSystem.actions.FindAction("Move");
         }
 
         void Update()
         {
-            if (!moveAction.triggered)
+            if (!_moveAction.triggered)
             {
                 return;
             }
             
-            Vector2Int movementDirection = Vector2Int.RoundToInt(moveAction.ReadValue<Vector2>());
+            Vector2Int movementDirection = Vector2Int.RoundToInt(_moveAction.ReadValue<Vector2>());
 
             if (movementDirection.sqrMagnitude == 0)
             {
@@ -44,7 +47,7 @@ namespace map
             }
             
             _selectedMapNode = nextMapNode;
-            transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
+            _transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
         }
     }
 }
