@@ -8,8 +8,10 @@ namespace map
 
         public MainMap()
         {
-            _rootMapNode.AddNeighbor(MapDirection.East)
-                .AddNeighbor(MapDirection.North);
+            MapNode splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
+            
+            splitNode1.AddNeighbor(MapDirection.North);
+            splitNode1.AddNeighbor(MapDirection.South);
         }
 
         public MapNode GetRootNode()

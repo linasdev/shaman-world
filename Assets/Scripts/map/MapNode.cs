@@ -22,17 +22,20 @@ namespace map
             {
                 throw new DirectionAlreadyPresentInMapNodeException(direction);
             }
-            else
-            {
-                mapNode._neighborNodes.TryAdd(direction.Reverse(), mapNode);
-            }
+
+            mapNode._neighborNodes.TryAdd(direction.Reverse(), this);
 
             return mapNode;
         }
 
         public MapNode GetNeighbor(MapDirection direction)
         {
-            return _neighborNodes[direction];
+            if (!_neighborNodes.TryGetValue(direction, out var neighbor))
+            {
+                return null;
+            }
+
+            return neighbor;
         }
         
         public Vector2Int GetPosition()
