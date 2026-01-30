@@ -44,7 +44,7 @@ namespace map
             }
             
             _selectedMapNode = nextMapNode;
-            transform.position = new Vector3(_selectedMapNode.GetPosition().x * 5, _selectedMapNode.GetPosition().y * 5, 0);
+            transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
         }
     }
 }
