@@ -1,28 +1,34 @@
+using System;
 using System.Collections.Generic;
 using Exceptions;
 using UnityEngine;
 
 namespace Save
 {
+    [Serializable]
     public class GameState
     {
-        private readonly HashSet<Vector2Int> _unlockedMapNodes = new();
+        public List<Vector2Int> unlockedMapNodes = new();
 
         public bool IsMapNodeLocked(Vector2Int position)
         {
-            return !_unlockedMapNodes.Contains(position);
+            return !unlockedMapNodes.Contains(position);
         }
 
         public void SetMapNodeLocked(Vector2Int position, bool locked)
         {
             if (!locked)
             {
-                _unlockedMapNodes.Add(position);
+                if (unlockedMapNodes.Contains(position))
+                {
+                    return;
+                }
+
+                unlockedMapNodes.Add(position);
+                return;
             }
-            else
-            {
-                _unlockedMapNodes.Remove(position);
-            }
+
+            unlockedMapNodes.Remove(position);
         }
     }
 }
