@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Map
 {
@@ -66,7 +67,14 @@ namespace Map
         }
 
         private void LoadSelectedArea() {
+            var sceneName = _selectedMapNode.GetSceneName();
+            if (sceneName == null)
+            {
+                return;
+            }
+
             MapProvider.MainMap.UnloadGameObjects();
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Map
         private GameObject _nodeObject;
         private bool _locked;
         private bool _gameObjectsLoaded;
+        private string _sceneName;
 
         public MapNode(Vector2Int position)
         {
@@ -109,6 +110,12 @@ namespace Map
             return neighborNode;
         }
 
+        public MapNode SetSceneName(string sceneName)
+        {
+            _sceneName = sceneName;
+            return this;
+        }
+
         public MapNode GetNeighbor(MapDirection direction)
         {
             return !_neighborNodes.TryGetValue(direction, out var neighbor) ? null : neighbor;
@@ -122,6 +129,11 @@ namespace Map
         public Vector2? GetWorldPosition()
         {
             return new Vector2(_position.x, _position.y) * _distanceBetweenNodes;
+        }
+
+        public string GetSceneName()
+        {
+            return _sceneName;
         }
 
         public bool IsLocked()
