@@ -13,6 +13,7 @@ namespace Map
 
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
             splitNode1.SetSceneName("Scenes/Villages/Village1");
+            splitNode1.Unlock();
 
             splitNode1
                 .AddNeighbor(MapDirection.North)
