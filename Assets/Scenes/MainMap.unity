@@ -119,6 +119,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1033693751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1033693752}
+  - component: {fileID: 1033693753}
+  m_Layer: 0
+  m_Name: MainMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1033693752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033693751}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1033693753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033693751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a57ceb71995f4bbe85926e0fc100d226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::map.MainMapBehavior
+  mapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
 --- !u!1 &1209569335
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606bba2910784d839ec113c9b80c7093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MapPlayerBehavior
-  MapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
+  mainMap: {fileID: 1033693751}
 --- !u!212 &1209569337
 SpriteRenderer:
   serializedVersion: 2
@@ -236,6 +281,7 @@ GameObject:
   - component: {fileID: 1382759954}
   - component: {fileID: 1382759953}
   - component: {fileID: 1382759952}
+  - component: {fileID: 1382759956}
   m_Layer: 0
   m_Name: MapCamera
   m_TagString: MainCamera
@@ -361,9 +407,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1382759956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382759951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca1bea4e48942498a0f73fdf398dc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::map.MapCameraBehavior
+  mapPlayer: {fileID: 1209569335}
+  damping: 0.457
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1382759955}
   - {fileID: 1209569338}
+  - {fileID: 1033693752}

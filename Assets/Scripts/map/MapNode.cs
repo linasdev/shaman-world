@@ -8,28 +8,31 @@ namespace map
     {
         private readonly IDictionary<MapDirection, MapNode> _neighborNodes = new SortedDictionary<MapDirection, MapNode>();
         private readonly Vector2Int _position;
+        private readonly Transform _parentTransform;
         private readonly Sprite _sprite;
 
-        public MapNode(Vector2Int position, Sprite sprite)
+        public MapNode(Vector2Int position, Transform parentTransform, Sprite sprite)
         {
             _position = position;
+            _parentTransform = parentTransform;
             _sprite = sprite;
             
-            GameObject gameObject = new GameObject("MapNode_" + _position.x + "_" + _position.y)
+            var gameObject = new GameObject("MapNode_" + _position.x + "_" + _position.y)
             {
                 transform =
                 {
-                    position = new Vector3(_position.x, _position.y, 0)
+                    position = new Vector3(_position.x, _position.y, 0),
+                    parent = _parentTransform
                 }
             };
             
-            SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            var spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = _sprite;
         }
 
         public MapNode AddNeighbor(MapDirection direction)
         {
-            MapNode mapNode = new MapNode(direction.IncrementPosition(_position), _sprite);
+            MapNode mapNode = new(direction.IncrementPosition(_position), _parentTransform, _sprite);
             
             if (!_neighborNodes.TryAdd(direction, mapNode))
             {
@@ -43,12 +46,7 @@ namespace map
 
         public MapNode GetNeighbor(MapDirection direction)
         {
-            if (!_neighborNodes.TryGetValue(direction, out var neighbor))
-            {
-                return null;
-            }
-
-            return neighbor;
+            return !_neighborNodes.TryGetValue(direction, out var neighbor) ? null : neighbor;
         }
         
         public Vector2Int GetPosition()

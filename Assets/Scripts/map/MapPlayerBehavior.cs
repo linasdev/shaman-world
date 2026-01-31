@@ -5,41 +5,39 @@ namespace map
 {
     public class MapPlayerBehavior : MonoBehaviour
     {
-        private MapNode _selectedMapNode;
-        private Transform _transform;
-        private InputAction _moveAction;
-
-        public Sprite MapNodeSprite;
+        public GameObject mainMap;
         
-        void Start()
+        private MapNode _selectedMapNode;
+        private InputAction _moveAction;
+        
+        public void Start()
         {
-            _selectedMapNode = new MainMap(MapNodeSprite).GetRootNode();
-            _transform = GetComponent<Transform>();
+            _selectedMapNode = mainMap.GetComponent<MainMapBehavior>().GetRootNode();
             _moveAction = InputSystem.actions.FindAction("Move");
         }
 
-        void Update()
+        public void Update()
         {
             if (!_moveAction.triggered)
             {
                 return;
             }
             
-            Vector2Int movementDirection = Vector2Int.RoundToInt(_moveAction.ReadValue<Vector2>());
+            var movementDirection = Vector2Int.RoundToInt(_moveAction.ReadValue<Vector2>());
 
             if (movementDirection.sqrMagnitude == 0)
             {
                 return;
             }
 
-            MapDirection? direction = MapDirectionMethods.FromVector2Int(movementDirection);
+            var direction = MapDirectionMethods.FromVector2Int(movementDirection);
 
             if (direction == null)
             {
                 return;
             }
 
-            MapNode nextMapNode =  _selectedMapNode.GetNeighbor((MapDirection)direction);
+            var nextMapNode =  _selectedMapNode.GetNeighbor((MapDirection)direction);
 
             if (nextMapNode == null)
             {
@@ -47,7 +45,7 @@ namespace map
             }
             
             _selectedMapNode = nextMapNode;
-            _transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
+            transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
         }
     }
 }

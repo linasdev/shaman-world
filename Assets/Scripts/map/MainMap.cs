@@ -6,17 +6,17 @@ namespace map
     {
         private readonly MapNode _rootMapNode;
         
-        public MainMap(Sprite mapNodeSprite)
+        public MainMap(Transform parentTransform, Sprite mapNodeSprite)
         {
-            _rootMapNode = new(new Vector2Int(0, 0), mapNodeSprite);
+            _rootMapNode = new MapNode(new Vector2Int(0, 0), parentTransform, mapNodeSprite);
             
-            MapNode splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
+            var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
 
             splitNode1
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
             
-            MapNode splitNode2 = splitNode1
+            var splitNode2 = splitNode1
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East)
@@ -27,7 +27,7 @@ namespace map
             splitNode2
                 .AddNeighbor(MapDirection.West);
             
-            MapNode splitNode3 = splitNode2
+            var splitNode3 = splitNode2
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
@@ -35,7 +35,7 @@ namespace map
             splitNode3
                 .AddNeighbor(MapDirection.East);
 
-            MapNode splitNode4 = splitNode3
+            var splitNode4 = splitNode3
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East)
@@ -47,7 +47,7 @@ namespace map
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.West);
 
-            MapNode splitNode5 = splitNode4
+            var splitNode5 = splitNode4
                 .AddNeighbor(MapDirection.East)
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East);
@@ -56,7 +56,7 @@ namespace map
                 .AddNeighbor(MapDirection.East)
                 .AddNeighbor(MapDirection.East);
 
-            MapNode splitNode6 = splitNode5
+            var splitNode6 = splitNode5
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.North);
 
