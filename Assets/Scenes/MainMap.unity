@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57ceb71995f4bbe85926e0fc100d226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MainMapBehavior
-  distanceBetweenNodes: 1.5
+  distanceBetweenNodes: 1.25
   mapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
   mapLockSprite: {fileID: 7482667652216324306, guid: 7cf274aa0594e43e7a3953612dd13e31, type: 3}
 --- !u!212 &1033693754
