@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace map
+namespace Map
 {
     public enum MapDirection
     {

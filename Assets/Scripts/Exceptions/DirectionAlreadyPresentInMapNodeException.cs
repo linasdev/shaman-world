@@ -1,8 +1,8 @@
 using System;
-using map;
+using Map;
 using UnityEngine;
 
-namespace exceptions
+namespace Exceptions
 {
     public class DirectionAlreadyPresentInMapNodeException : Exception
     {

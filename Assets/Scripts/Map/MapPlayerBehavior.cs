@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace map
+namespace Map
 {
     public class MapPlayerBehavior : MonoBehaviour
     {
         public GameObject mainMap;
-        
+
+        private MainMapBehavior _mainMapBehavior;
         private MapNode _selectedMapNode;
         private InputAction _moveAction;
         
         public void Start()
         {
-            _selectedMapNode = mainMap.GetComponent<MainMapBehavior>().GetRootNode();
+            _mainMapBehavior = mainMap.GetComponent<MainMapBehavior>();
+            _selectedMapNode = _mainMapBehavior.GetRootNode();
             _moveAction = InputSystem.actions.FindAction("Move");
         }
 

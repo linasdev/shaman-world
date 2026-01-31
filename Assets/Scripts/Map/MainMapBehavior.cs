@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace map
+namespace Map
 {
     public class MainMapBehavior : MonoBehaviour
     {
@@ -17,6 +17,11 @@ namespace map
         public MapNode GetRootNode()
         {
             return _mainMap.GetRootNode();
+        }
+
+        public bool UnlockAtPosition(Vector2Int position)
+        {
+            return _mainMap.GetRootNode().UnlockAtPosition(Vector2Int.zero, position);
         }
     }
 }

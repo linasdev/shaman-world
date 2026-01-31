@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace map
+namespace Map
 {
     public class MapCameraBehavior : MonoBehaviour
     {

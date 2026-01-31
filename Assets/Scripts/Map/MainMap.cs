@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace map
+namespace Map
 {
     public class MainMap
     {
@@ -8,7 +8,7 @@ namespace map
         
         public MainMap(Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
         {
-            _rootMapNode = new MapNode(new Vector2Int(0, 0), parentTransform, nodeSprite, lockSprite);
+            _rootMapNode = new MapNode(Vector2Int.zero, parentTransform, nodeSprite, lockSprite);
             _rootMapNode.Unlock();
             
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
