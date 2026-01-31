@@ -12,37 +12,51 @@ namespace Map
             _rootMapNode.Unlock();
 
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
+            splitNode1.SetSceneName("Village1");
 
             splitNode1
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
 
-            var splitNode2 = splitNode1
+            var village2 = splitNode1
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East)
-                .AddNeighbor(MapDirection.North)
+                .AddNeighbor(MapDirection.North);
+            village2.SetSceneName("Village2");
+
+            var splitNode2 = village2
                 .AddNeighbor(MapDirection.East)
                 .AddNeighbor(MapDirection.North);
 
             splitNode2
                 .AddNeighbor(MapDirection.West);
 
-            var splitNode3 = splitNode2
-                .AddNeighbor(MapDirection.North)
+            var village3 = splitNode2
+                .AddNeighbor(MapDirection.North);
+            village3.SetSceneName("Village3");
+
+            var splitNode3 = village3
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
 
             splitNode3
                 .AddNeighbor(MapDirection.East);
 
-            var splitNode4 = splitNode3
-                .AddNeighbor(MapDirection.South)
+            var village4 = splitNode3
+                .AddNeighbor(MapDirection.South);
+            village4.SetSceneName("Village4");
+
+            var village5 = village4
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East)
-                .AddNeighbor(MapDirection.South)
+                .AddNeighbor(MapDirection.South);
+            village5.SetSceneName("Village5");
+
+            var splitNode4 = village5
                 .AddNeighbor(MapDirection.West)
                 .AddNeighbor(MapDirection.South);
+            splitNode4.SetSceneName("Village6");
 
             splitNode4
                 .AddNeighbor(MapDirection.South)
@@ -52,6 +66,7 @@ namespace Map
                 .AddNeighbor(MapDirection.East)
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.East);
+            splitNode5.SetSceneName("Village7");
 
             splitNode5
                 .AddNeighbor(MapDirection.East)
@@ -60,10 +75,12 @@ namespace Map
             var splitNode6 = splitNode5
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.North);
+            splitNode6.SetSceneName("Village8");
 
-            splitNode6
+            var village9 = splitNode6
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.North);
+            village9.SetSceneName("Village9");
 
             splitNode6
                 .AddNeighbor(MapDirection.East)
