@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 991057039}
   - component: {fileID: 991057036}
   - component: {fileID: 991057035}
+  - component: {fileID: 991057040}
   m_Layer: 0
   m_Name: VillageCamera
   m_TagString: MainCamera
@@ -338,9 +339,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.17274305
-    width: 1
-    height: 0.654274
+    y: 0.050458714
+    width: 0.99999994
+    height: 0.8991685
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -400,6 +401,20 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &991057040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991057033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915db3cf018942a491ddea6994bcd6e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Village.VillageCameraBehavior
+  villagePlayer: {fileID: 1071879629}
+  smoothTime: 0.5
 --- !u!1 &1071879629
 GameObject:
   m_ObjectHideFlags: 0

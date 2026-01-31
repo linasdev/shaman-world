@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Map
+namespace Village
 {
-    public class MapCameraBehavior : MonoBehaviour
+    public class VillageCameraBehavior : MonoBehaviour
     {
-        public GameObject mapPlayer;
+        public GameObject villagePlayer;
 
         [Range(0.1f, 1f)]
         public float smoothTime;
@@ -13,13 +13,13 @@ namespace Map
 
         public void Start()
         {
-            Vector2 playerPosition = mapPlayer.transform.position;
+            Vector2 playerPosition = villagePlayer.transform.position;
             transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
         }
 
         public void Update()
         {
-            var targetPosition = new Vector3(mapPlayer.transform.position.x, mapPlayer.transform.position.y, transform.position.z);
+            var targetPosition = new Vector3(villagePlayer.transform.position.x, villagePlayer.transform.position.y, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, smoothTime);
         }
     }
