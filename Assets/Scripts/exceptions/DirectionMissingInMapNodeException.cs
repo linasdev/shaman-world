@@ -1,15 +1,18 @@
 using System;
 using map;
+using UnityEngine;
 
 namespace exceptions
 {
     public class DirectionMissingInMapNodeException : Exception
     {
+        private Vector2Int Position { get; }
         private MapDirection Direction { get; }
 
-        public DirectionMissingInMapNodeException(MapDirection direction)
+        public DirectionMissingInMapNodeException(Vector2Int position, MapDirection direction)
         {
-            this.Direction = direction;
+            Position = position;
+            Direction = direction;
         }
     }
 }

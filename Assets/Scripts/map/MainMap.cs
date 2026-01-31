@@ -6,9 +6,9 @@ namespace map
     {
         private readonly MapNode _rootMapNode;
         
-        public MainMap(Transform parentTransform, Sprite mapNodeSprite)
+        public MainMap(Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
         {
-            _rootMapNode = new MapNode(new Vector2Int(0, 0), parentTransform, mapNodeSprite);
+            _rootMapNode = new MapNode(new Vector2Int(0, 0), parentTransform, nodeSprite, lockSprite);
             
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
 

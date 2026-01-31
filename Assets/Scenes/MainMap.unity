@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MainMapBehavior
   mapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
+  mapLockSprite: {fileID: 7482667652216324306, guid: 7cf274aa0594e43e7a3953612dd13e31, type: 3}
 --- !u!1 &1209569335
 GameObject:
   m_ObjectHideFlags: 0
