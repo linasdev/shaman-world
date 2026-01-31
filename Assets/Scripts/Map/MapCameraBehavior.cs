@@ -5,10 +5,10 @@ namespace Map
     public class MapCameraBehavior : MonoBehaviour
     {
         public GameObject mapPlayer;
-        
+
         [Range(0, 1)]
         public float damping;
-        
+
         public void Start()
         {
             Vector2 playerPosition = mapPlayer.transform.position;

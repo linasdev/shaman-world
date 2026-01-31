@@ -8,11 +8,11 @@ namespace Map
         private MapNode _selectedMapNode;
         private InputAction _moveAction;
         private InputAction _enterAreaAction;
-        
+
         public void Start()
         {
             var actionMap = InputSystem.actions.FindActionMap("Map");
-            
+
             _selectedMapNode = MapProvider.MainMap.GetRootNode();
             _moveAction = actionMap.FindAction("Move");
             _enterAreaAction = actionMap.FindAction("EnterArea");
@@ -30,7 +30,7 @@ namespace Map
             {
                 return;
             }
-            
+
             var movementDirection = Vector2Int.RoundToInt(_moveAction.ReadValue<Vector2>());
 
             if (movementDirection.sqrMagnitude == 0)
@@ -51,7 +51,7 @@ namespace Map
             {
                 return;
             }
-            
+
             _selectedMapNode = nextMapNode;
             transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
         }

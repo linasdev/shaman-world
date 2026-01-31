@@ -1,23 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using Exceptions;
+using Save;
 using UnityEngine;
 
 namespace Map
 {
-    public class MapNode 
+    public class MapNode
     {
         private readonly IDictionary<MapDirection, MapNode> _neighborNodes = new SortedDictionary<MapDirection, MapNode>();
         private readonly List<MapNodeLock> _locks;
         private readonly Vector2Int _position;
         private GameObject _nodeObject;
         private bool _locked;
-        
+
         public MapNode(Vector2Int position)
         {
             _locks = new List<MapNodeLock>();
             _position = position;
-            _locked = true; // TODO: Load from save file
+            _locked = GameStateManager.GetCurrentState().IsMapNodeLocked(position);
         }
 
         public void LoadGameObjects(MapNode previousNode, Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
@@ -30,22 +31,22 @@ namespace Map
                     parent = parentTransform
                 }
             };
-            
+
             var spriteRenderer = _nodeObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = nodeSprite;
-            
+
             foreach (var mapLock in _locks)
             {
                 mapLock.LoadGameObject(parentTransform, lockSprite);
             }
-            
+
             foreach (var neighborNode in _neighborNodes.Values)
             {
                 if (previousNode != null && neighborNode == previousNode)
                 {
                     continue;
                 }
-                
+
                 neighborNode.LoadGameObjects(this, parentTransform, nodeSprite, lockSprite);
             }
         }
@@ -65,7 +66,7 @@ namespace Map
                 {
                     continue;
                 }
-                
+
                 neighborNode.UnloadGameObjects(this);
             }
         }
@@ -73,21 +74,21 @@ namespace Map
         public MapNode AddNeighbor(MapDirection direction)
         {
             MapNode neighborNode = new(direction.IncrementPosition(_position));
-            
+
             if (!_neighborNodes.TryAdd(direction, neighborNode))
             {
                 throw new DirectionAlreadyPresentInMapNodeException(_position, direction);
             }
 
             var reverseDirection = direction.Reverse();
-            
+
             if (!neighborNode._neighborNodes.TryAdd(reverseDirection, this))
             {
                 throw new DirectionAlreadyPresentInMapNodeException(neighborNode._position, direction);
             }
 
             AddLocksForNeighborNode(neighborNode);
-            
+
             return neighborNode;
         }
 
@@ -95,7 +96,7 @@ namespace Map
         {
             return !_neighborNodes.TryGetValue(direction, out var neighbor) ? null : neighbor;
         }
-        
+
         public Vector2Int GetPosition()
         {
             return _position;
@@ -114,7 +115,7 @@ namespace Map
                     .Any(neighborNode => neighborNode.UnlockAtPosition(_position, position));
 
             Unlock();
-            
+
             return true;
         }
 
@@ -126,30 +127,40 @@ namespace Map
                     .Any(neighborNode => neighborNode.LockAtPosition(_position, position));
 
             Lock();
-            
+
             return true;
         }
 
         public void Unlock()
         {
             if (!_locked) return;
-            
+
             _locked = false;
             ResetLocks();
+
+            GameStateManager
+                .GetCurrentState()
+                .SetMapNodeLocked(_position, _locked);
+            GameStateManager.SaveToDisk();
         }
 
         public void Lock()
         {
             if (_locked) return;
-            
+
             _locked = true;
             ResetLocks();
+
+            GameStateManager
+                .GetCurrentState()
+                .SetMapNodeLocked(_position, _locked);
+            GameStateManager.SaveToDisk();
         }
 
         private void ResetLocks()
         {
             ClearLocks();
-            
+
             foreach (var neighborNode in _neighborNodes.Values)
             {
                 AddLocksForNeighborNode(neighborNode);
@@ -163,7 +174,7 @@ namespace Map
                 mapLock.GetOtherNode(this)._locks.Remove(mapLock);
                 mapLock.UnloadGameObject();
             }
-            
+
             _locks.Clear();
         }
 
@@ -171,7 +182,7 @@ namespace Map
         {
             var worldPosition = new Vector3(_position.x, _position.y);
             var neighborWorldPosition = new Vector3(neighborNode._position.x, neighborNode._position.y);
-            
+
             switch (_locked, neighborNode._locked)
             {
                 case (true, true):

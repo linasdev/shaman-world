@@ -5,18 +5,18 @@ namespace Map
     public class MainMap
     {
         private readonly MapNode _rootMapNode;
-        
+
         public MainMap()
         {
             _rootMapNode = new MapNode(Vector2Int.zero);
             _rootMapNode.Unlock();
-            
+
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
 
             splitNode1
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
-            
+
             var splitNode2 = splitNode1
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.South)
@@ -27,12 +27,12 @@ namespace Map
 
             splitNode2
                 .AddNeighbor(MapDirection.West);
-            
+
             var splitNode3 = splitNode2
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.North)
                 .AddNeighbor(MapDirection.East);
-            
+
             splitNode3
                 .AddNeighbor(MapDirection.East);
 
@@ -43,7 +43,7 @@ namespace Map
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.West)
                 .AddNeighbor(MapDirection.South);
-            
+
             splitNode4
                 .AddNeighbor(MapDirection.South)
                 .AddNeighbor(MapDirection.West);

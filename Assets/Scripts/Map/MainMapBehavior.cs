@@ -1,4 +1,5 @@
 using System;
+using Save;
 using UnityEngine;
 
 namespace Map
@@ -10,6 +11,7 @@ namespace Map
         
         public void Start()
         {
+            GameStateManager.LoadFromDisk(); // TODO: Move into a game object from the starting scene
             MapProvider.MainMap.LoadGameObjects(transform, mapNodeSprite, mapLockSprite);
         }
 

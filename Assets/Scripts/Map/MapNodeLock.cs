@@ -31,7 +31,7 @@ namespace Map
                     parent = parentTransform
                 }
             };
-        
+
             var spriteRenderer = _lockObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = lockSprite;
         }
@@ -41,7 +41,7 @@ namespace Map
             if (!_lockObject) {
                 return;
             }
-            
+
             Object.Destroy(_lockObject);
         }
 

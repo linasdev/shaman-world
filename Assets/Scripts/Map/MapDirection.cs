@@ -24,7 +24,7 @@ namespace Map
                 _ => throw new ArgumentException("Invalid map direction")
             };
         }
-        
+
         public static Vector2Int IncrementPosition(this MapDirection direction, Vector2Int position)
         {
             return direction switch
@@ -36,7 +36,7 @@ namespace Map
                 _ => throw new ArgumentException("Invalid map direction")
             };
         }
-        
+
         public static MapDirection? FromVector2Int(Vector2Int direction)
         {
             return direction switch
