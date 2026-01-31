@@ -39,7 +39,7 @@ namespace map
 
             var nextMapNode =  _selectedMapNode.GetNeighbor((MapDirection)direction);
 
-            if (nextMapNode == null)
+            if (nextMapNode == null || nextMapNode.IsLocked())
             {
                 return;
             }
