@@ -49,6 +49,7 @@ namespace Map
 
             if (nextMapNode == null || nextMapNode.IsLocked())
             {
+                nextMapNode?.Unlock(); // TODO: Remove this
                 return;
             }
 
