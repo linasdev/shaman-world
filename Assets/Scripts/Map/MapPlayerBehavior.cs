@@ -54,7 +54,15 @@ namespace Map
             }
 
             _selectedMapNode = nextMapNode;
-            transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
+
+            var worldPosition = _selectedMapNode.GetWorldPosition();
+            if (!worldPosition.HasValue)
+            {
+                return;
+            }
+
+            var worldPositionValue = worldPosition.Value;
+            transform.position = new Vector3(worldPositionValue.x, worldPositionValue.y, 0);
         }
 
         private void LoadSelectedArea() {

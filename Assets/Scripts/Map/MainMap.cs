@@ -75,9 +75,9 @@ namespace Map
             return _rootMapNode;
         }
 
-        public void LoadGameObjects(Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
+        public void LoadGameObjects(float distanceBetweenNodes, Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
         {
-            _rootMapNode.LoadGameObjects(null, parentTransform, nodeSprite, lockSprite);
+            _rootMapNode.LoadGameObjects(null, distanceBetweenNodes, parentTransform, nodeSprite, lockSprite);
         }
 
         public void UnloadGameObjects()

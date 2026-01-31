@@ -6,28 +6,34 @@ namespace Map
     {
         private readonly MapNode _nodeA;
         private readonly MapNode _nodeB;
-        private readonly Vector3 _worldPosition;
         private GameObject _lockObject;
 
-        public MapNodeLock(MapNode nodeA, MapNode nodeB, Vector3 worldPosition)
+        public MapNodeLock(MapNode nodeA, MapNode nodeB)
         {
             _nodeA = nodeA;
             _nodeB = nodeB;
-            _worldPosition = worldPosition;
         }
 
-        public void LoadGameObject(Transform parentTransform, Sprite lockSprite)
+        public void LoadGameObject(float distanceBetweenNodes, Transform parentTransform, Sprite lockSprite)
         {
             if (_lockObject)
             {
                 return;
             }
 
-            _lockObject = new GameObject($"MapLock_{_worldPosition.x}_{_worldPosition.y}")
+            var worldPosition = GetWorldPosition(distanceBetweenNodes);
+            if (!worldPosition.HasValue)
+            {
+                return;
+            }
+
+            var worldPositionValue = worldPosition.Value;
+
+            _lockObject = new GameObject($"MapLock_{worldPositionValue.x}_{worldPositionValue.y}")
             {
                 transform =
                 {
-                    position = _worldPosition,
+                    position = worldPositionValue,
                     parent = parentTransform
                 }
             };
@@ -48,6 +54,25 @@ namespace Map
         public MapNode GetOtherNode(MapNode mapNode)
         {
             return mapNode == _nodeA ? _nodeB : _nodeA;
+        }
+
+        private Vector3? GetWorldPosition(float distanceBetweenNodes)
+        {
+            var worldPositionA = new Vector2(_nodeA.GetPosition().x, _nodeA.GetPosition().y) * distanceBetweenNodes;
+            var worldPositionB =
+                new Vector2(_nodeB.GetPosition().x, _nodeB.GetPosition().y) * distanceBetweenNodes;
+
+            switch (_nodeA.IsLocked(), _nodeB.IsLocked())
+            {
+                case (true, true):
+                    return Vector3.Lerp(worldPositionA, worldPositionB, 0.5f);
+                case (true, false):
+                    return Vector3.Lerp(worldPositionA, worldPositionB, 0.25f);
+                case (false, true):
+                    return Vector3.Lerp(worldPositionA, worldPositionB, 0.75f);
+            }
+
+            return null;
         }
     }
 }

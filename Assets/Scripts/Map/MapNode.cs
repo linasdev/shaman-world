@@ -9,8 +9,9 @@ namespace Map
     public class MapNode
     {
         private readonly IDictionary<MapDirection, MapNode> _neighborNodes = new SortedDictionary<MapDirection, MapNode>();
-        public readonly List<MapNodeLock> _locks;
+        private readonly List<MapNodeLock> _locks;
         private readonly Vector2Int _position;
+        private float? _distanceBetweenNodes;
         private Transform _parentTransform;
         private Sprite _lockSprite;
         private GameObject _nodeObject;
@@ -25,15 +26,18 @@ namespace Map
             _gameObjectsLoaded = false;
         }
 
-        public void LoadGameObjects(MapNode previousNode, Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
+        public void LoadGameObjects(MapNode previousNode, float distanceBetweenNodes, Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
         {
+            var worldPosition = new Vector2(_position.x, _position.y) * distanceBetweenNodes;
+
+            _distanceBetweenNodes = distanceBetweenNodes;
             _parentTransform = parentTransform;
             _lockSprite = lockSprite;
-            _nodeObject = new GameObject($"MapNode_{_position.x}_{_position.y}")
+            _nodeObject = new GameObject($"MapNode_{worldPosition.x}_{worldPosition.y}")
             {
                 transform =
                 {
-                    position = new Vector3(_position.x, _position.y, 0),
+                    position = new Vector3(worldPosition.x, worldPosition.y, 0),
                     parent = _parentTransform
                 }
             };
@@ -43,7 +47,7 @@ namespace Map
 
             foreach (var mapLock in _locks)
             {
-                mapLock.LoadGameObject(_parentTransform, lockSprite);
+                mapLock.LoadGameObject(distanceBetweenNodes, _parentTransform, _lockSprite);
             }
 
             foreach (var neighborNode in _neighborNodes.Values)
@@ -53,7 +57,7 @@ namespace Map
                     continue;
                 }
 
-                neighborNode.LoadGameObjects(this, _parentTransform, nodeSprite, lockSprite);
+                neighborNode.LoadGameObjects(this, distanceBetweenNodes, _parentTransform, nodeSprite, _lockSprite);
             }
 
             _gameObjectsLoaded = true;
@@ -78,6 +82,7 @@ namespace Map
                 neighborNode.UnloadGameObjects(this);
             }
 
+            _distanceBetweenNodes = null;
             _parentTransform = null;
             _lockSprite = null;
             _gameObjectsLoaded = false;
@@ -112,6 +117,11 @@ namespace Map
         public Vector2Int GetPosition()
         {
             return _position;
+        }
+
+        public Vector2? GetWorldPosition()
+        {
+            return new Vector2(_position.x, _position.y) * _distanceBetweenNodes;
         }
 
         public bool IsLocked()
@@ -192,43 +202,19 @@ namespace Map
 
         private void AddLocksForNeighborNode(MapNode neighborNode)
         {
-            var worldPosition = new Vector3(_position.x, _position.y);
-            var neighborWorldPosition = new Vector3(neighborNode._position.x, neighborNode._position.y);
-            MapNodeLock mapLock = null;
-
-            switch (_locked, neighborNode._locked)
-            {
-                case (true, true):
-                {
-                    var lockWorldPosition = Vector3.Lerp(worldPosition, neighborWorldPosition, 0.5f);
-                    mapLock = new MapNodeLock(this, neighborNode, lockWorldPosition);
-                    break;
-                }
-                case (true, false):
-                {
-                    var lockWorldPosition = Vector3.Lerp(worldPosition, neighborWorldPosition, 0.25f);
-                    mapLock = new MapNodeLock(this, neighborNode, lockWorldPosition);
-                    break;
-                }
-                case (false, true):
-                {
-                    var lockWorldPosition = Vector3.Lerp(worldPosition, neighborWorldPosition, 0.75f);
-                    mapLock = new MapNodeLock(neighborNode, this, lockWorldPosition);
-                    break;
-                }
-            }
-
-            if (mapLock == null)
+            if (!_locked && !neighborNode._locked)
             {
                 return;
             }
 
+            MapNodeLock mapLock = new MapNodeLock(this, neighborNode);
+
             _locks.Add(mapLock);
             neighborNode._locks.Add(mapLock);
 
-            if (_gameObjectsLoaded)
+            if (_gameObjectsLoaded && _distanceBetweenNodes != null)
             {
-                mapLock.LoadGameObject(_parentTransform, _lockSprite);
+                mapLock.LoadGameObject((float) _distanceBetweenNodes, _parentTransform, _lockSprite);
             }
         }
     }

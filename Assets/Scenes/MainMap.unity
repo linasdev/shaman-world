@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57ceb71995f4bbe85926e0fc100d226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MainMapBehavior
+  distanceBetweenNodes: 5
   mapNodeSprite: {fileID: 7482667652216324306, guid: 8a4298485a266e1379943bd023c70953, type: 3}
   mapLockSprite: {fileID: 7482667652216324306, guid: 7cf274aa0594e43e7a3953612dd13e31, type: 3}
 --- !u!1 &1209569335
@@ -195,7 +196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606bba2910784d839ec113c9b80c7093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MapPlayerBehavior
-  mainMap: {fileID: 1033693751}
 --- !u!212 &1209569337
 SpriteRenderer:
   serializedVersion: 2
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::map.MapCameraBehavior
   mapPlayer: {fileID: 1209569335}
-  damping: 0.457
+  damping: 0.7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
