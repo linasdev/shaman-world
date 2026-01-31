@@ -5,21 +5,27 @@ namespace Map
 {
     public class MapPlayerBehavior : MonoBehaviour
     {
-        public GameObject mainMap;
-
-        private MainMapBehavior _mainMapBehavior;
         private MapNode _selectedMapNode;
         private InputAction _moveAction;
+        private InputAction _enterAreaAction;
         
         public void Start()
         {
-            _mainMapBehavior = mainMap.GetComponent<MainMapBehavior>();
-            _selectedMapNode = _mainMapBehavior.GetRootNode();
-            _moveAction = InputSystem.actions.FindAction("Move");
+            var actionMap = InputSystem.actions.FindActionMap("Map");
+            
+            _selectedMapNode = MapProvider.MainMap.GetRootNode();
+            _moveAction = actionMap.FindAction("Move");
+            _enterAreaAction = actionMap.FindAction("EnterArea");
         }
 
         public void Update()
         {
+            if (_enterAreaAction.triggered)
+            {
+                LoadSelectedArea();
+                return;
+            }
+
             if (!_moveAction.triggered)
             {
                 return;
@@ -48,6 +54,10 @@ namespace Map
             
             _selectedMapNode = nextMapNode;
             transform.position = new Vector3(_selectedMapNode.GetPosition().x, _selectedMapNode.GetPosition().y, 0);
+        }
+
+        private void LoadSelectedArea() {
+            MapProvider.MainMap.UnloadGameObjects();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Map
@@ -7,21 +8,14 @@ namespace Map
         public Sprite mapNodeSprite;
         public Sprite mapLockSprite;
         
-        private MainMap _mainMap;
-        
         public void Start()
         {
-            _mainMap = new MainMap(transform, mapNodeSprite, mapLockSprite);
-        }
-        
-        public MapNode GetRootNode()
-        {
-            return _mainMap.GetRootNode();
+            MapProvider.MainMap.LoadGameObjects(transform, mapNodeSprite, mapLockSprite);
         }
 
-        public bool UnlockAtPosition(Vector2Int position)
+        public void OnDestroy()
         {
-            return _mainMap.GetRootNode().UnlockAtPosition(Vector2Int.zero, position);
+            MapProvider.MainMap.UnloadGameObjects();
         }
     }
 }

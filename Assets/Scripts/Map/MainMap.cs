@@ -6,9 +6,9 @@ namespace Map
     {
         private readonly MapNode _rootMapNode;
         
-        public MainMap(Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
+        public MainMap()
         {
-            _rootMapNode = new MapNode(Vector2Int.zero, parentTransform, nodeSprite, lockSprite);
+            _rootMapNode = new MapNode(Vector2Int.zero);
             _rootMapNode.Unlock();
             
             var splitNode1 = _rootMapNode.AddNeighbor(MapDirection.East);
@@ -73,6 +73,16 @@ namespace Map
         public MapNode GetRootNode()
         {
             return _rootMapNode;
+        }
+
+        public void LoadGameObjects(Transform parentTransform, Sprite nodeSprite, Sprite lockSprite)
+        {
+            _rootMapNode.LoadGameObjects(null, parentTransform, nodeSprite, lockSprite);
+        }
+
+        public void UnloadGameObjects()
+        {
+            _rootMapNode.UnloadGameObjects(null);
         }
     }
 }
