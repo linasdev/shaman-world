@@ -8,14 +8,14 @@ namespace map
     {
         private readonly IDictionary<MapDirection, MapNode> _neighborNodes = new SortedDictionary<MapDirection, MapNode>();
         private readonly Vector2Int _position;
-        private GameObject _gameObject;
-        private Sprite _sprite;
+        private readonly Sprite _sprite;
 
         public MapNode(Vector2Int position, Sprite sprite)
         {
             _position = position;
             _sprite = sprite;
-            _gameObject = new GameObject("MapNode_" + _position.x + "_" + _position.y)
+            
+            GameObject gameObject = new GameObject("MapNode_" + _position.x + "_" + _position.y)
             {
                 transform =
                 {
@@ -23,7 +23,7 @@ namespace map
                 }
             };
             
-            SpriteRenderer spriteRenderer = _gameObject.AddComponent<SpriteRenderer>();
+            SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = _sprite;
         }
 
